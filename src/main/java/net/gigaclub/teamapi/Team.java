@@ -1,4 +1,4 @@
-package net.gigaclub.team;
+package net.gigaclub.teamapi;
 
 import net.gigaclub.base.odoo.Odoo;
 import org.apache.xmlrpc.XmlRpcException;
