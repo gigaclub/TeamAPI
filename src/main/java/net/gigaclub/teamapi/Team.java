@@ -35,7 +35,7 @@ public class Team {
 
     // Status Codes:
     // 4: Other error
-    // 3: User already in team
+    // 3: User has no access to create a team
     // 2: Team with name already exists
     // 1: Team could not be created
     // 0: Team created successfully
@@ -52,17 +52,14 @@ public class Team {
     }
 
     // Status Codes:
-    // 5: Other error
-    // 4: User has no team
-    // 3: Team does not exist
-    // 2: User is not member of this team
-    // 1: User is not manager of this team
+    // 2: Other error
+    // 1: No valid team found for this user
     // 0: Success
-    public int editTeam(String playerUUID, String name, String newName) {
+    public int editTeam(String playerUUID, int teamId, String newName) {
         try {
             return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
                     this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "edit_team", Arrays.asList(playerUUID, name, newName)
+                    "gc.team", "edit_team", Arrays.asList(playerUUID, teamId, newName)
             ));
         } catch (XmlRpcException e) {
             e.printStackTrace();
@@ -71,17 +68,14 @@ public class Team {
     }
 
     // Status Codes:
-    // 5: Other error
-    // 4: User has no team
-    // 3: Team does not exist
-    // 2: User is not member of this team
-    // 1: User is not manager of this team
+    // 2: Other error
+    // 1: No valid team found for this user
     // 0: Success
-    public int editTeam(String playerUUID, String name, String newName, String newDescription) {
+    public int editTeam(String playerUUID, int teamId, String newName, String newDescription) {
         try {
             return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
                     this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "edit_team", Arrays.asList(playerUUID, name, newName, newDescription)
+                    "gc.team", "edit_team", Arrays.asList(playerUUID, teamId, newName, newDescription)
             ));
         } catch (XmlRpcException e) {
             e.printStackTrace();
