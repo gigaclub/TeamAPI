@@ -17,7 +17,7 @@ public class Team {
 
     // Status Codes:
     // 4: Other error
-    // 3: User already in team
+    // 3: User has no access to create a team
     // 2: Team with name already exists
     // 1: Team could not be created
     // 0: Team created successfully
