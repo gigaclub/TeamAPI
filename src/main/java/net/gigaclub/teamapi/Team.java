@@ -64,7 +64,7 @@ public class Team {
         } catch (XmlRpcException e) {
             e.printStackTrace();
         }
-        return 5;
+        return 2;
     }
 
     // Status Codes:
@@ -80,7 +80,7 @@ public class Team {
         } catch (XmlRpcException e) {
             e.printStackTrace();
         }
-        return 5;
+        return 2;
     }
 
     // Status Codes:
@@ -97,20 +97,39 @@ public class Team {
         } catch (XmlRpcException e) {
             e.printStackTrace();
         }
-        return 2;
+        return 3;
+    }
+
+    // Status Codes:
+    // 5: Other error
+    // 4: No valid team found for this user
+    // 3: User to invite not found
+    // 2: User is already member of team
+    // 1: Request already sent
+    // 0: Success
+    public int inviteMember(String playerUUID, int teamId, String playerUUIDtoInvite) {
+        try {
+            return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
+                    this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
+                    "gc.team", "invite_member", Arrays.asList(playerUUID, teamId, playerUUIDtoInvite)
+            ));
+        } catch (XmlRpcException e) {
+            e.printStackTrace();
+        }
+        return 5;
     }
 
     // Status Codes:
     // 4: Other error
-    // 3: Team does not exist
-    // 2: User is not manager
-    // 1: User is already member of this team
+    // 3: User has no permission to accept requests
+    // 2: Team does not exist
+    // 1: Request does not exist
     // 0: Success
-    public int inviteMember(String playerUUID, String playerUUIDtoInvite) {
+    public int acceptRequest(String playerUUID, int teamId) {
         try {
             return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
                     this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "invite_member", Arrays.asList(playerUUID, playerUUIDtoInvite)
+                    "gc.team", "accept_request", Arrays.asList(playerUUID, teamId)
             ));
         } catch (XmlRpcException e) {
             e.printStackTrace();
@@ -119,37 +138,21 @@ public class Team {
     }
 
     // Status Codes:
-    // 3: Other error
+    // 4: Other error
+    // 3: User has no permission to reject requests
     // 2: Team does not exist
     // 1: Request does not exist
     // 0: Success
-    public int acceptRequest(String playerUUID, String teamName) {
+    public int denyRequest(String playerUUID, int teamId) {
         try {
             return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
                     this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "accept_request", Arrays.asList(playerUUID, teamName)
+                    "gc.team", "deny_request", Arrays.asList(playerUUID, teamId)
             ));
         } catch (XmlRpcException e) {
             e.printStackTrace();
         }
-        return 3;
-    }
-
-    // Status Codes:
-    // 3: Other error
-    // 2: Team does not exist
-    // 1: Request does not exist
-    // 0: Success
-    public int denyRequest(String playerUUID, String teamName) {
-        try {
-            return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
-                    this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "deny_request", Arrays.asList(playerUUID, teamName)
-            ));
-        } catch (XmlRpcException e) {
-            e.printStackTrace();
-        }
-        return 3;
+        return 4;
     }
 
     // Status Codes:
@@ -171,11 +174,11 @@ public class Team {
         return 4;
     }
 
-    public JSONObject getTeamNameByMember(String playerUUID) {
+    public JSONArray getTeamsByMember(String playerUUID) {
         try {
-            return new JSONObject((Map<String, String>) this.odoo.getModels().execute("execute_kw", Arrays.asList(
+            return new JSONArray(this.odoo.getModels().execute("execute_kw", Arrays.asList(
                     this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "get_team_by_member", Arrays.asList(playerUUID)
+                    "gc.team", "get_teams_by_member", Arrays.asList(playerUUID)
             )));
         } catch (XmlRpcException e) {
             e.printStackTrace();
@@ -195,11 +198,11 @@ public class Team {
         return null;
     }
 
-    public JSONObject getTeam(String name) {
+    public JSONObject getTeam(int teamId) {
         try {
             return new JSONObject((Map<String, String>) this.odoo.getModels().execute("execute_kw", Arrays.asList(
                     this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "get_team", Arrays.asList(name)
+                    "gc.team", "get_team", Arrays.asList(teamId)
             )));
         } catch (XmlRpcException e) {
             e.printStackTrace();
