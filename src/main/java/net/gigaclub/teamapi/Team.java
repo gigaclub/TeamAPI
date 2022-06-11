@@ -104,24 +104,6 @@ public class Team {
     // 4: Other error
     // 3: Team does not exist
     // 2: User is not manager
-    // 1: User is not user of this team
-    // 0: Success
-    public int addMember(String playerUUID, String playerUUIDtoAdd) {
-        try {
-            return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
-                    this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "add_member", Arrays.asList(playerUUID, playerUUIDtoAdd)
-            ));
-        } catch (XmlRpcException e) {
-            e.printStackTrace();
-        }
-        return 4;
-    }
-
-    // Status Codes:
-    // 4: Other error
-    // 3: Team does not exist
-    // 2: User is not manager
     // 1: User is already member of this team
     // 0: Success
     public int inviteMember(String playerUUID, String playerUUIDtoInvite) {
@@ -186,46 +168,6 @@ public class Team {
             e.printStackTrace();
         }
         return 4;
-    }
-
-    // Status Codes:
-    // 6: Other error
-    // 5: Team does not exist
-    // 4: User is not manager
-    // 3: User to kick is not a team
-    // 2: User to kick is not in this team
-    // 1: User is already manager of this team
-    // 0: Success
-    public int promoteMember(String playerUUID, String playerUUIDtoPromote) {
-        try {
-            return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
-                    this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "promote_member", Arrays.asList(playerUUID, playerUUIDtoPromote)
-            ));
-        } catch (XmlRpcException e) {
-            e.printStackTrace();
-        }
-        return 6;
-    }
-
-    // Status Codes:
-    // 6: Other error
-    // 5: Team does not exist
-    // 4: User is not manager
-    // 3: User to kick is not a team
-    // 2: User to kick is not in this team
-    // 1: User is already user of this team
-    // 0: Success
-    public int demoteMember(String playerUUID, String playerUUIDtoDemote) {
-        try {
-            return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
-                    this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "demote_member", Arrays.asList(playerUUID, playerUUIDtoDemote)
-            ));
-        } catch (XmlRpcException e) {
-            e.printStackTrace();
-        }
-        return 6;
     }
 
     public JSONObject getTeamNameByMember(String playerUUID) {
