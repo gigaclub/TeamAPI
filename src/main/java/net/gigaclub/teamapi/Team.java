@@ -153,16 +153,17 @@ public class Team {
     }
 
     // Status Codes:
-    // 4: Other error
-    // 3: Team does not exist
-    // 2: User is not manager
-    // 1: User is not user of this team
+    // 5: Other error
+    // 4: No valid team found for this user
+    // 3: User to kick does not exist
+    // 2: Not allowed to kick owner
+    // 1: User is not member of team
     // 0: Success
-    public int kickMember(String playerUUID, String playerUUIDtoKick) {
+    public int kickMember(String playerUUID, int teamId, String playerUUIDtoKick) {
         try {
             return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
                     this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "kick_member", Arrays.asList(playerUUID, playerUUIDtoKick)
+                    "gc.team", "kick_member", Arrays.asList(playerUUID, teamId, playerUUIDtoKick)
             ));
         } catch (XmlRpcException e) {
             e.printStackTrace();
