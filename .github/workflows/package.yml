@@ -1,0 +1,22 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: ["14.0"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: "17"
+      - name: Publish package
+        run: gradle publish
+        env:
+          GITHUB_PACKAGES_USERID: ${{ secrets.PACKAGES_USERID }}
+          GITHUB_PACKAGES_IMPORT_TOKEN: ${{ secrets.PACKAGES_IMPORT_TOKEN }}
