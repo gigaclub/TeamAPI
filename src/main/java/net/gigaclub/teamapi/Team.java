@@ -210,4 +210,16 @@ public class Team {
         return null;
     }
 
+    public JSONArray getInvites(String playerUUID) {
+        try {
+            return new JSONArray(this.odoo.getModels().execute("execute_kw", Arrays.asList(
+                    this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
+                    "gc.request", "get_invites", Arrays.asList(playerUUID)
+            )));
+        } catch (XmlRpcException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
