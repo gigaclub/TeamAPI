@@ -84,14 +84,15 @@ public class Team {
     }
 
     // Status Codes:
-    // 2: Other error
+    // 3: Other error
+    // 2: User has no permission to leave teams
     // 1: User has no team
     // 0: Success
-    public int leaveTeam(String playerUUID) {
+    public int leaveTeam(String playerUUID, int teamId) {
         try {
             return (int) this.odoo.getModels().execute("execute_kw", Arrays.asList(
                     this.odoo.getDatabase(), this.odoo.getUid(), this.odoo.getPassword(),
-                    "gc.team", "leave_team", Arrays.asList(playerUUID)
+                    "gc.team", "leave_team", Arrays.asList(playerUUID, teamId)
             ));
         } catch (XmlRpcException e) {
             e.printStackTrace();
