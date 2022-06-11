@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Team {
 
-    private Odoo odoo;
+    protected Odoo odoo;
 
     public Team(String hostname, String database, String username, String password) {
         this.odoo = new Odoo(hostname, database, username, password);
